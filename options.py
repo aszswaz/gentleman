@@ -27,9 +27,9 @@ class Options:
         # 确保程序具有对指定文件夹的写入权限，如果文件夹不存在则自动创建文件夹
         if os.path.exists(self.output):
             if not os.path.isdir(self.output):
-                raise Exception(f"not a directory: {self.output}")
+                raise PermissionError(f"not a directory: {self.output}")
             if not os.access(self.output, os.W_OK):
-                raise Exception(f"Permission denied: {self.output}")
+                raise PermissionError(f"Permission denied: {self.output}")
         else:
             os.makedirs(self.output)
 
