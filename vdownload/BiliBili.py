@@ -118,14 +118,15 @@ class BiliBili:
         video_file: str = self._file_download(video.video_url)
         print("Downloading audio stream...")
         audio_file: str = self._file_download(video.audio_url)
+        print("Video and audio are being merged...")
         # 使用 ffmpeg 合并图片流和音频流
-        filename = re.sub('\\\\|:|\\s|/', '-', video.title)
+        filename = re.sub('[\\\\:/]', '-', video.title)
         output = f"{self.output}/{filename}.mp4"
         index = 0
         while os.path.exists(output):
             output = f"{self.output}/{filename}-{index}.mp4"
             index += 1
-        exit_code = os.system(f"ffmpeg -i {video_file} -i {audio_file} -codec copy {output}")
+        exit_code = os.system(f"ffmpeg -loglevel quiet -i '{video_file}' -i '{audio_file}' -codec copy '{output}'")
         os.remove(video_file)
         os.remove(audio_file)
         if exit_code != os.EX_OK:
