@@ -4,8 +4,8 @@ from options import Options
 from urllib.parse import ParseResult
 from .DownloadException import DownloadException
 import requests
-from .config import base_header, chrome_ua
-from tempfile import NamedTemporaryFile
+from .config import base_header, chrome_ua, temp_dir
+from tempfile import mktemp
 import re
 
 
@@ -14,6 +14,8 @@ class BiliBiliVideo:
     BiliBili 视频信息
     """
 
+    # 视频的序号，从 0 开始
+    number: int
     aid: int
     cid: int
     id: int
@@ -37,12 +39,15 @@ class BiliBili:
     header: dict
     # 视频的输出文件夹
     output: str
+    # 用于提取文件名称的正则表达式
+    filename_reg: re.Pattern
 
     def __init__(self, url: ParseResult, options: Options):
         self.url = url
         self.cookie = options.cookie
         self.header = base_header.copy()
         self.output = options.output
+        self.filename_reg = options.filename_reg and re.compile(options.filename_reg) or None
 
         self.header["cookie"] = options.cookie
         self.header["referer"] = "https://www.bilibili.com/"
@@ -74,8 +79,9 @@ class BiliBili:
 
         videos: list[BiliBiliVideo] = []
         episodes: list = data['episodes']
-        for item in episodes:
+        for i, item in enumerate(episodes):
             video = BiliBiliVideo()
+            video.number = i
             video.id = item["id"]
             video.aid = item["aid"]
             video.cid = item["cid"]
@@ -119,16 +125,17 @@ class BiliBili:
         print("Downloading audio stream...")
         audio_file: str = self._file_download(video.audio_url)
         print("Video and audio are being merged...")
+
         # 使用 ffmpeg 合并图片流和音频流
+        # 去除文件路径不允许的字符
         filename = re.sub('[\\\\:/]', '-', video.title)
+        if self.filename_reg:
+            result = self.filename_reg.search(video.title)
+            if result: filename = result.group(0)
+        filename = f"{video.number:02d}-{filename}"
         output = f"{self.output}/{filename}.mp4"
-        index = 0
-        while os.path.exists(output):
-            output = f"{self.output}/{filename}-{index}.mp4"
-            index += 1
-        exit_code = os.system(f"ffmpeg -loglevel quiet -i '{video_file}' -i '{audio_file}' -codec copy '{output}'")
-        os.remove(video_file)
-        os.remove(audio_file)
+
+        exit_code = os.system(f"ffmpeg -loglevel quiet -y -i '{video_file}' -i '{audio_file}' -codec copy '{output}'")
         if exit_code != os.EX_OK:
             raise DownloadException("Video merging failed.")
         pass
@@ -140,23 +147,21 @@ class BiliBili:
         :param url: url 资源
         :return: 文件的临时保存目录，需要手动删除文件
         """
-        temp_path: str
+        temp_path: str = mktemp(prefix="bilibili-", dir=temp_dir)
         header = self.header.copy()
         header["user-agent"] = chrome_ua
 
         try:
-            with NamedTemporaryFile(mode="w+b", prefix="bilibili-", delete=False) as file:
-                temp_path = file.name
+            with open(file=temp_path, mode="w+b") as file:
                 res = requests.get(url, headers=header, stream=True)
                 if res.status_code != 200:
                     raise DownloadException(f"file download failed. url: {url}")
                 total_size = int(res.headers["content-length"])
                 download_size = 0
                 for cunk in res.iter_content(chunk_size=8192):
-                    if cunk:
-                        file.write(cunk)
-                        download_size += len(cunk)
-                        print(f"\r{download_size / total_size * 100:.2f}%", end="")
+                    file.write(cunk)
+                    download_size += len(cunk)
+                    print(f"\r{download_size / total_size * 100:.2f}%", end="")
                 print()
         except Exception as e:
             os.remove(temp_path)
