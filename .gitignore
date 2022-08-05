@@ -1,0 +1,16 @@
+# python
+venv
+__pycache__
+
+# JetBrain
+.idea
+*.iml
+
+# binary file
+*.m4s
+*.mp3
+*.mp4
+*.m4a
+
+# curl
+*.cookie

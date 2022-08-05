@@ -1,0 +1,641 @@
+{
+  "code": 0,
+  "data": {
+    "abtest_info": {
+      "attention_abtest": 0
+    },
+    "active_market": [
+      1
+    ],
+    "activity_list": [],
+    "brief": {
+      "content": "",
+      "img": [
+        {
+          "aspect_ratio": 1.075,
+          "url": "http://i0.hdslb.com/bfs/archive/bd3be4c424d4fa28aa47ac45fbf2a67b7a4265f7.jpg"
+        },
+        {
+          "aspect_ratio": 1.1125,
+          "url": "http://i0.hdslb.com/bfs/archive/2711460813d26f3950f6471e955cbd91439f9bb0.jpg"
+        },
+        {
+          "aspect_ratio": 1.065625,
+          "url": "http://i0.hdslb.com/bfs/archive/c670fecd3e757cf6b744c387d28f036f4a42032c.jpg"
+        },
+        {
+          "aspect_ratio": 1.1109375,
+          "url": "http://i0.hdslb.com/bfs/archive/1f103f03be0f9cc114eb98da6f08c463f5d3f6ba.jpg"
+        },
+        {
+          "aspect_ratio": 1.7703125,
+          "url": "http://i0.hdslb.com/bfs/archive/20694fc499e56d461e8be8af73a7aad40148d08a.jpg"
+        },
+        {
+          "aspect_ratio": 1.9640625,
+          "url": "http://i0.hdslb.com/bfs/archive/e9dbfb47b76826f7e6e8db63434ddd41ae648a9c.jpg"
+        },
+        {
+          "aspect_ratio": 1.878125,
+          "url": "http://i0.hdslb.com/bfs/archive/d0e71d458209d37fa30f8b459e8be462754980b6.jpg"
+        },
+        {
+          "aspect_ratio": 1.93125,
+          "url": "http://i0.hdslb.com/bfs/archive/da72ff4ff3fbb07ccdfae661420520abb5836949.jpg"
+        },
+        {
+          "aspect_ratio": 1.15625,
+          "url": "http://i0.hdslb.com/bfs/archive/b69e9adfd472cfcacee6f70679133d4834e2a896.jpg"
+        }
+      ],
+      "title": "课程概述",
+      "type": 2
+    },
+    "consulting": {
+      "consulting_flag": false,
+      "consulting_url": ""
+    },
+    "cooperation": {
+      "link": "https://www.bilibili.com/cheese/cooperate?from=web_detail"
+    },
+    "cooperators": [],
+    "coupon": {
+      "amount": 0.6,
+      "coupon_type": 1,
+      "discount_amount": "领券立减51.2",
+      "expire_minute": "2022-08-09 23:59",
+      "expire_time": "2022-08-09 23:59:00",
+      "short_title": "6折优惠券",
+      "show_amount": "6",
+      "start_time": "2022-07-20 00:00:00",
+      "status": 2,
+      "title": "经典课专属6折优惠券",
+      "token": "B20220720104540448714743",
+      "use_scope": "仅限部分课程使用"
+    },
+    "course_content": "本课程附赠随堂练习，点击下载",
+    "courses": [
+      {
+        "file_id": 1231,
+        "file_name": "课程资料汇总.zip"
+      }
+    ],
+    "cover": "http://i0.hdslb.com/bfs/archive/5c84745c177174ad0b518a4206bf98711e8e670c.jpg",
+    "ep_catalogue": [],
+    "ep_count": 14,
+    "episode_page": {
+      "next": false,
+      "num": 1,
+      "size": 15,
+      "total": 15
+    },
+    "episode_sort": 1,
+    "episode_tag": {
+      "part_preview_tag": "部分试看",
+      "pay_tag": "付费",
+      "preview_tag": "全集试看"
+    },
+    "episodes": [
+      {
+        "aid": 290143423,
+        "catalogue_index": 0,
+        "cid": 328033959,
+        "cover": "http://i0.hdslb.com/bfs/archive/5c84745c177174ad0b518a4206bf98711e8e670c.jpg",
+        "duration": 194,
+        "ep_status": 0,
+        "from": "pugv",
+        "id": 6173,
+        "index": 1,
+        "label": "全集试看",
+        "page": 1,
+        "play": 2768541,
+        "play_way": 1,
+        "play_way_format": "点播",
+        "playable": true,
+        "release_date": 1619492411,
+        "status": 1,
+        "subtitle": "视频课 · 3分14秒",
+        "title": "宣导片：来一场人工智能的奇妙冒险吧~",
+        "watched": false,
+        "watchedHistory": 0
+      },
+      {
+        "aid": 630135796,
+        "catalogue_index": 0,
+        "cid": 328034390,
+        "cover": "http://i0.hdslb.com/bfs/archive/5c84745c177174ad0b518a4206bf98711e8e670c.jpg",
+        "duration": 1294,
+        "ep_status": 0,
+        "from": "pugv",
+        "id": 6174,
+        "index": 2,
+        "label": "部分试看",
+        "page": 1,
+        "play": 173468,
+        "play_way": 1,
+        "play_way_format": "点播",
+        "playable": true,
+        "release_date": 1619492411,
+        "status": 3,
+        "subtitle": "视频课 · 21分34秒",
+        "title": "1.一元一次函数感知器：如何描述直觉",
+        "watched": false,
+        "watchedHistory": 0
+      },
+      {
+        "aid": 888107214,
+        "catalogue_index": 0,
+        "cid": 337759143,
+        "cover": "http://i0.hdslb.com/bfs/archive/27b6266306b5ad754f592f526cb055ab1c01f8d7.jpg",
+        "duration": 1232,
+        "ep_status": 0,
+        "from": "pugv",
+        "id": 6588,
+        "index": 3,
+        "page": 1,
+        "play": 22349,
+        "play_way": 1,
+        "play_way_format": "点播",
+        "playable": false,
+        "release_date": 1620961207,
+        "status": 2,
+        "subtitle": "视频课 · 20分32秒",
+        "title": "2.方差代价函数：知错",
+        "watched": false,
+        "watchedHistory": 0
+      },
+      {
+        "aid": 930644283,
+        "catalogue_index": 0,
+        "cid": 341126480,
+        "cover": "http://i0.hdslb.com/bfs/archive/27b6266306b5ad754f592f526cb055ab1c01f8d7.jpg",
+        "duration": 984,
+        "ep_status": 0,
+        "from": "pugv",
+        "id": 6717,
+        "index": 4,
+        "label": "部分试看",
+        "page": 1,
+        "play": 35012,
+        "play_way": 1,
+        "play_way_format": "点播",
+        "playable": true,
+        "release_date": 1621569613,
+        "status": 3,
+        "subtitle": "视频课 · 16分24秒",
+        "title": "3.梯度下降和反向传播：能改（上）",
+        "watched": false,
+        "watchedHistory": 0
+      },
+      {
+        "aid": 460817257,
+        "catalogue_index": 0,
+        "cid": 344763571,
+        "cover": "http://i0.hdslb.com/bfs/archive/27b6266306b5ad754f592f526cb055ab1c01f8d7.jpg",
+        "duration": 1268,
+        "ep_status": 0,
+        "from": "pugv",
+        "id": 6911,
+        "index": 5,
+        "page": 1,
+        "play": 14144,
+        "play_way": 1,
+        "play_way_format": "点播",
+        "playable": false,
+        "release_date": 1622174414,
+        "status": 2,
+        "subtitle": "视频课 · 21分8秒",
+        "title": "4.梯度下降和反向传播：能改（下）",
+        "watched": false,
+        "watchedHistory": 0
+      },
+      {
+        "aid": 290925911,
+        "catalogue_index": 0,
+        "cid": 348476103,
+        "cover": "http://i0.hdslb.com/bfs/archive/cf43ba147dda6615b96e14259cd25f3bff8dbf78.jpg",
+        "duration": 1200,
+        "ep_status": 0,
+        "from": "pugv",
+        "id": 7129,
+        "index": 6,
+        "page": 1,
+        "play": 13727,
+        "play_way": 1,
+        "play_way_format": "点播",
+        "playable": false,
+        "release_date": 1622779204,
+        "status": 2,
+        "subtitle": "视频课 · 20分",
+        "title": "5.激活函数：给机器注入灵魂",
+        "watched": false,
+        "watchedHistory": 0
+      },
+      {
+        "aid": 376009440,
+        "catalogue_index": 0,
+        "cid": 351974058,
+        "cover": "http://i0.hdslb.com/bfs/archive/cf43ba147dda6615b96e14259cd25f3bff8dbf78.jpg",
+        "duration": 1148,
+        "ep_status": 0,
+        "from": "pugv",
+        "id": 7307,
+        "index": 7,
+        "page": 1,
+        "play": 12049,
+        "play_way": 1,
+        "play_way_format": "点播",
+        "playable": false,
+        "release_date": 1623384008,
+        "status": 2,
+        "subtitle": "视频课 · 19分8秒",
+        "title": "6.隐藏层：神经网络为什么working",
+        "watched": false,
+        "watchedHistory": 0
+      },
+      {
+        "aid": 248679776,
+        "catalogue_index": 0,
+        "cid": 355416596,
+        "cover": "http://i0.hdslb.com/bfs/archive/cf43ba147dda6615b96e14259cd25f3bff8dbf78.jpg",
+        "duration": 1033,
+        "ep_status": 0,
+        "from": "pugv",
+        "id": 7576,
+        "index": 8,
+        "page": 1,
+        "play": 9791,
+        "play_way": 1,
+        "play_way_format": "点播",
+        "playable": false,
+        "release_date": 1623988827,
+        "status": 2,
+        "subtitle": "视频课 · 17分13秒",
+        "title": "7.高维空间：机器如何面对越来越复杂的问题",
+        "watched": false,
+        "watchedHistory": 0
+      },
+      {
+        "aid": 206309868,
+        "catalogue_index": 0,
+        "cid": 358932949,
+        "cover": "http://i0.hdslb.com/bfs/archive/cf43ba147dda6615b96e14259cd25f3bff8dbf78.jpg",
+        "duration": 1881,
+        "ep_status": 0,
+        "from": "pugv",
+        "id": 7697,
+        "index": 9,
+        "page": 1,
+        "play": 11044,
+        "play_way": 1,
+        "play_way_format": "点播",
+        "playable": false,
+        "release_date": 1624593771,
+        "status": 2,
+        "subtitle": "视频课 · 31分21秒",
+        "title": "8.初识Keras：轻松完成神经网络模型搭建",
+        "watched": false,
+        "watchedHistory": 0
+      },
+      {
+        "aid": 546418057,
+        "catalogue_index": 0,
+        "cid": 362480213,
+        "cover": "http://i0.hdslb.com/bfs/archive/cf43ba147dda6615b96e14259cd25f3bff8dbf78.jpg",
+        "duration": 944,
+        "ep_status": 0,
+        "from": "pugv",
+        "id": 7903,
+        "index": 10,
+        "page": 1,
+        "play": 8777,
+        "play_way": 1,
+        "play_way_format": "点播",
+        "playable": false,
+        "release_date": 1625198404,
+        "status": 2,
+        "subtitle": "视频课 · 15分44秒",
+        "title": "9.深度学习：神奇的DeepLearning",
+        "watched": false,
+        "watchedHistory": 0
+      },
+      {
+        "aid": 206721874,
+        "catalogue_index": 0,
+        "cid": 368799311,
+        "cover": "http://i0.hdslb.com/bfs/archive/cf43ba147dda6615b96e14259cd25f3bff8dbf78.jpg",
+        "duration": 1635,
+        "ep_status": 0,
+        "from": "pugv",
+        "id": 8137,
+        "index": 11,
+        "page": 1,
+        "play": 9385,
+        "play_way": 1,
+        "play_way_format": "点播",
+        "playable": false,
+        "release_date": 1626408008,
+        "status": 2,
+        "subtitle": "视频课 · 27分15秒",
+        "title": "10.卷积神经网络：打破图像识别的瓶颈",
+        "watched": false,
+        "watchedHistory": 0
+      },
+      {
+        "aid": 974300064,
+        "catalogue_index": 0,
+        "cid": 374389967,
+        "cover": "http://i0.hdslb.com/bfs/archive/cf43ba147dda6615b96e14259cd25f3bff8dbf78.jpg",
+        "duration": 1251,
+        "ep_status": 0,
+        "from": "pugv",
+        "id": 8512,
+        "index": 12,
+        "page": 1,
+        "play": 9033,
+        "play_way": 1,
+        "play_way_format": "点播",
+        "playable": false,
+        "release_date": 1627012811,
+        "status": 2,
+        "subtitle": "视频课 · 20分51秒",
+        "title": "11. 卷积神经网络：图像识别实战",
+        "watched": false,
+        "watchedHistory": 0
+      },
+      {
+        "aid": 249485641,
+        "catalogue_index": 0,
+        "cid": 378524578,
+        "cover": "http://i0.hdslb.com/bfs/archive/3d0a1380a76e088a39d8068d4342f674f12027fd.jpg",
+        "duration": 1400,
+        "ep_status": 0,
+        "from": "pugv",
+        "id": 8771,
+        "index": 13,
+        "page": 1,
+        "play": 6971,
+        "play_way": 1,
+        "play_way_format": "点播",
+        "playable": false,
+        "release_date": 1627617602,
+        "status": 2,
+        "subtitle": "视频课 · 23分20秒",
+        "title": "12.循环：序列依赖问题",
+        "watched": false,
+        "watchedHistory": 0
+      },
+      {
+        "aid": 674524203,
+        "catalogue_index": 0,
+        "cid": 379826208,
+        "cover": "http://i0.hdslb.com/bfs/archive/3d0a1380a76e088a39d8068d4342f674f12027fd.jpg",
+        "duration": 1387,
+        "ep_status": 0,
+        "from": "pugv",
+        "id": 8834,
+        "index": 14,
+        "page": 1,
+        "play": 6043,
+        "play_way": 1,
+        "play_way_format": "点播",
+        "playable": false,
+        "release_date": 1628222401,
+        "status": 2,
+        "subtitle": "视频课 · 23分7秒",
+        "title": "13.LSTM网络：自然语言处理实践",
+        "watched": false,
+        "watchedHistory": 0
+      },
+      {
+        "aid": 292079632,
+        "catalogue_index": 0,
+        "cid": 382657086,
+        "cover": "https://archive.biliimg.com/bfs/archive/3d0a1380a76e088a39d8068d4342f674f12027fd.jpg",
+        "duration": 632,
+        "ep_status": 0,
+        "from": "pugv",
+        "id": 9008,
+        "index": 15,
+        "page": 1,
+        "play": 5792,
+        "play_way": 1,
+        "play_way_format": "点播",
+        "playable": false,
+        "release_date": 1628222401,
+        "status": 2,
+        "subtitle": "视频课 · 10分32秒",
+        "title": "14.机器学习：最后一节课也是第一节课",
+        "watched": false,
+        "watchedHistory": 0
+      }
+    ],
+    "expiry_day": 0,
+    "faq": {
+      "content": "Q：课程在什么时间更新？\nA：课程更新频次以页面前端展示为准。购买成功后，课程更新将通过账号动态提示，方便及时观看。\n\nQ：课程购买后有收看时间限制吗？\nA：购买后除不可抗力因素外，本课程永久可看，请您放心购买。\n\nQ：原价购买课程后，如遇到优惠折扣，是否可以退还差价或重新购买？\nA：虚拟商品付款后无法返还，请您随时留意各类课程折扣信息，按需购买。\n\nQ：购买课程后是否可以加入老师的粉丝群或者用户群？\nA：如老师设置用户群，我们将邀您加入，但我们无法承诺所有老师均提供用户群服务，感谢理解。",
+      "link": "http://m.bilibili.com",
+      "title": "常见问题"
+    },
+    "faq1": {
+      "items": [
+        {
+          "answer": "课程更新频次以页面前端展示为准。购买成功后，课程更新将通过账号动态提示，方便及时观看。",
+          "question": "课程在什么时间更新？"
+        },
+        {
+          "answer": "购买后除不可抗力因素外，本课程永久可看，请您放心购买。",
+          "question": "课程购买后有收看时间限制吗？"
+        },
+        {
+          "answer": "虚拟商品付款后无法返还，请您随时留意各类课程折扣信息，按需购买。",
+          "question": "原价购买课程后，如遇到优惠折扣，是否可以退还差价或重新购买？"
+        },
+        {
+          "answer": "如老师设置用户群，我们将邀您加入，但我们无法承诺所有老师均提供用户群服务，感谢理解。",
+          "question": "购买课程后是否可以加入老师的粉丝群或者用户群？"
+        }
+      ],
+      "title": "常见问题"
+    },
+    "is_enable_cash": true,
+    "is_series": false,
+    "live_ep_count": 0,
+    "opened_ep_count": 14,
+    "pack_info": {
+      "pack_item_list": [],
+      "pack_notice2": "联报最高立享4折",
+      "title": "套餐优惠"
+    },
+    "paid_jump": {
+      "jump_url_for_app": "bilibili://cheese/pay-guide?season_id=281",
+      "url": ""
+    },
+    "paid_view": false,
+    "payment": {
+      "bp_enough": 0,
+      "desc": "券后 76.8 元起/14课时",
+      "discount_desc": "76.8 元",
+      "discount_prefix": "券后",
+      "pay_shade": "券后支付 76.8 元即可观看所有视频",
+      "price": 128,
+      "price_format": "128",
+      "refresh_text": "立即购买",
+      "select_text": "领券购买"
+    },
+    "previewed_purchase_note": {
+      "long_watch_text": "试看5分钟，购买后即可观看完整内容",
+      "pay_text": "券后支付",
+      "price_format": " 76.8 元",
+      "watch_text": "即可观看所有视频",
+      "watching_text": "试看中，购买即可观看完整内容"
+    },
+    "purchase_format_note": {
+      "content_list": [
+        {
+          "bold": false,
+          "content": "本内容为付费内容，购买成功后方可观看。",
+          "number": "1."
+        },
+        {
+          "bold": true,
+          "content": "本内容为虚拟服务，已购买内容不支持退款，敬请谅解。",
+          "number": "2."
+        },
+        {
+          "bold": false,
+          "content": "实际购买价格以页面展示的价格及订单结算页显示价格为准。",
+          "number": "3."
+        },
+        {
+          "bold": false,
+          "content": "如您在购买付费内容时有任何疑问，可随时咨询在线客服。",
+          "number": "4."
+        },
+        {
+          "bold": false,
+          "content": "购买协议，请点击阅读<a href=\"https://www.bilibili.com/blackboard/agreement-class-pc.html\" color=\"#0ba395\" target=\"_blank\">《哔哩哔哩付费内容购买协议》</a>",
+          "number": ""
+        }
+      ],
+      "link": "https://www.bilibili.com/blackboard/agreement-class-pc.html",
+      "title": "购买须知"
+    },
+    "purchase_note": {
+      "content": "1. 本内容为付费内容，购买成功后方可观看。<br/>2. 本内容为虚拟服务，已购买内容不支持退款，敬请谅解。<br/>3. 实际购买价格以页面展示的价格及订单结算页显示价格为准。<br/>4. 如您在购买付费内容时有任何疑问，可随时咨询在线客服。<br/>完整的购买协议，请点击阅读<a href=\"https://www.bilibili.com/blackboard/agreement-class-pc.html\" color=\"#0ba395\" target=\"_blank\">《哔哩哔哩付费内容购买协议》</a>",
+      "link": "https://www.bilibili.com/blackboard/agreement-class-pc.html",
+      "title": "购买须知"
+    },
+    "purchase_protocol": {
+      "link": "https://www.bilibili.com/blackboard/agreement-class-pc.html",
+      "title": "付费内容购买协议"
+    },
+    "recommend_seasons": [
+      {
+        "cover": "http://i0.hdslb.com/bfs/archive/a612f5674a5679eb7314ef09d277ae9bed94d6f4.jpg",
+        "ep_count": "共12课时",
+        "id": 295,
+        "season_url": "https://m.bilibili.com/cheese/play/ss295?csource=Detail_relevantclass",
+        "subtitle": "互联网时代最重要的能力",
+        "title": "顶级互联网工程师的计算机思维课",
+        "view": 3223474
+      },
+      {
+        "cover": "https://archive.biliimg.com/bfs/archive/9c52156903aeff463c731ce00bc86671bff80f8d.jpg",
+        "ep_count": "共64课时",
+        "id": 810,
+        "season_url": "https://m.bilibili.com/cheese/play/ss810?csource=Detail_relevantclass",
+        "subtitle": "前Facebook工程师手把手教你吃透大厂面试题",
+        "title": "算法面试通关40讲",
+        "view": 43326
+      },
+      {
+        "cover": "http://i0.hdslb.com/bfs/archive/21857e525bf40e491a99a8888b5d83f34c7573b4.jpg",
+        "ep_count": "共31课时",
+        "id": 313,
+        "season_url": "https://m.bilibili.com/cheese/play/ss313?csource=Detail_relevantclass",
+        "subtitle": "项目导向，对小白十分友好",
+        "title": "Web前端入门：从零开始做网站",
+        "view": 656433
+      },
+      {
+        "cover": "https://archive.biliimg.com/bfs/archive/b8ed2f39d9624016f09fef8d3f65a1d1088033cc.jpg",
+        "ep_count": "共35课时",
+        "id": 703,
+        "season_url": "https://m.bilibili.com/cheese/play/ss703?csource=Detail_relevantclass",
+        "subtitle": "轻松玩转Linux，让Linux学习从此简单，让你从此爱上Linux。",
+        "title": "轻松玩转Linux",
+        "view": 119926
+      },
+      {
+        "cover": "https://archive.biliimg.com/bfs/archive/e7a36509f69278066fa2b891f2b87c3747722dc8.jpg",
+        "ep_count": "共52课时",
+        "id": 373,
+        "season_url": "https://m.bilibili.com/cheese/play/ss373?csource=Detail_relevantclass",
+        "subtitle": "不止教技术，还教思维的前端系统入门课，手把手带你轻松搞定2个网站+1个APP项目，全场景养成你的思维",
+        "title": "前端实战训练：2个网站+1个APP",
+        "view": 359485
+      },
+      {
+        "cover": "http://i0.hdslb.com/bfs/feed-admin/1879d1593a70e884327e92bb92298a9f3e1a0613.png",
+        "ep_count": "共18课时",
+        "id": 345,
+        "season_url": "https://m.bilibili.com/cheese/play/ss345?csource=Detail_relevantclass",
+        "subtitle": "用编程做设计，助你成为新兴的交互设计师",
+        "title": "次世代必备黑科技：创意编程指南",
+        "view": 777432
+      },
+      {
+        "cover": "http://i0.hdslb.com/bfs/archive/6b5b6b437833395a4d0f037017e44e4d23d0e5eb.jpg",
+        "ep_count": "共67课时",
+        "id": 236,
+        "season_url": "https://m.bilibili.com/cheese/play/ss236?csource=Detail_relevantclass",
+        "subtitle": "一学就会的Java课，专为新手打造！",
+        "title": "Java从入门到实战",
+        "view": 2460016
+      }
+    ],
+    "release_bottom_info": "没有更多啦~",
+    "release_info": "已完结 | 共14课时",
+    "release_info2": "共14课时",
+    "release_status": "已完结",
+    "season_id": 281,
+    "share_url": "https://m.bilibili.com/cheese/play/ss281",
+    "short_link": "bilibili://cheese/season/281",
+    "show_watermark": true,
+    "stat": {
+      "play": 3106126,
+      "play_desc": "310.6万播放"
+    },
+    "status": 10,
+    "stop_sell": false,
+    "subtitle": "仅用中学数学知识就能看懂的人工智能入门课",
+    "title": "小白也能听懂的人工智能原理",
+    "up_info": {
+      "avatar": "http://i1.hdslb.com/bfs/face/847f67dc92c8eee0afc5649627ba0acf5f6123a8.jpg",
+      "brief": "Ele实验室Up主，资深程序员",
+      "follower": 492277,
+      "is_follow": 0,
+      "is_living": false,
+      "jump_url": "",
+      "link": "https://space.bilibili.com/481434238",
+      "mid": 481434238,
+      "pendant": {
+        "image": "",
+        "name": "",
+        "pid": 0
+      },
+      "uname": "Ele实验室"
+    },
+    "update_status": 2,
+    "user_status": {
+      "bp": 0,
+      "favored": 0,
+      "favored_count": 0,
+      "is_expired": false,
+      "is_first_paid": false,
+      "payed": 0
+    },
+    "watermark_interval": 300
+  },
+  "message": "success"
+}
