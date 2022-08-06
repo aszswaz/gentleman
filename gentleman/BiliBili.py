@@ -1,6 +1,6 @@
 import os.path
 
-from options import Options
+from gentleman.options import Options
 from urllib.parse import ParseResult
 from .DownloadException import DownloadException
 import requests

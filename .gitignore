@@ -1,6 +1,9 @@
 # python
 venv
 __pycache__
+build
+*.whl
+gentleman.egg-info
 
 # JetBrain
 .idea
@@ -11,6 +14,12 @@ __pycache__
 *.mp3
 *.mp4
 *.m4a
+*.tar.gz
+*.zip
 
 # curl
 *.cookie
+
+# archlinux package
+pkg
+*.pkg.tar.zst

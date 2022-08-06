@@ -9,7 +9,7 @@ class Options:
     filename_reg: str
 
     def __init__(self):
-        arg_parse = ArgumentParser(description="bilibili video vdownload")
+        arg_parse = ArgumentParser(description="bilibili video gentleman")
         arg_parse.add_argument("urls", metavar="URL", type=str, nargs="+", help="video url.")
         arg_parse.add_argument("--cookie", type=str, required=True, help="account cookies.")
         arg_parse.add_argument(

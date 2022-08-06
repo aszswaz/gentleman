@@ -1,5 +1,5 @@
-from options import Options
 from urllib.parse import urlparse, ParseResult
+from .options import Options
 from .BiliBili import BiliBili
 
 

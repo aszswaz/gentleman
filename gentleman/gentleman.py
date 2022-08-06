@@ -1,9 +1,20 @@
 #!/usr/bin/python3
-from options import Options
-from vdownload import video_download, config
+from . import Options, video_download, config
 from atexit import register
 import signal
 import shutil
+
+
+def main():
+    options = Options()
+
+    # 用户发送的退出信号处理
+    # kill pid
+    signal.signal(signal.SIGINT, sig_handler)
+    # ctrl - c
+    signal.signal(signal.SIGTERM, sig_handler)
+
+    video_download(options)
 
 
 @register
@@ -21,13 +32,5 @@ def sig_handler(signum, frame):
 
 
 if __name__ == '__main__':
-    options = Options()
-
-    # 用户发送的退出信号处理
-    # kill pid
-    signal.signal(signal.SIGINT, sig_handler)
-    # ctrl - c
-    signal.signal(signal.SIGTERM, sig_handler)
-
-    video_download(options)
+    main()
     pass
