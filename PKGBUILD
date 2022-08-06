@@ -5,7 +5,7 @@ pkgdesc="bilibili instructional video downloader."
 arch=(any)
 license=('GPL')
 makedepends=(python-build python-installer python-wheel)
-depends=(python python-requests)
+depends=(python python-requests ffmpeg)
 build() {
     cd ../
     python -m build --wheel --no-isolation
