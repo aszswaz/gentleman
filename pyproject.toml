@@ -6,7 +6,7 @@ dependencies = [
 ]
 
 [project.scripts]
-gentleman = "gentleman.gentleman:main"
+gentleman = "gentleman.__main__:main"
 
 [build-system]
 requires = ["setuptools"]

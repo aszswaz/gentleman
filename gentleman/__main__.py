@@ -1,8 +1,12 @@
 #!/usr/bin/python3
-from . import Options, video_download, config
 from atexit import register
 import signal
 import shutil
+
+from urllib.parse import urlparse, ParseResult
+
+from . import config, bilibili
+from .options import Options
 
 
 def main():
@@ -17,6 +21,20 @@ def main():
     video_download(options)
 
 
+def video_download(options: Options):
+    """
+    下载视频
+    :param options:下载选项
+    """
+    for url in options.urls:
+        url_info: ParseResult = urlparse(url)
+        if url_info.hostname == "www.bilibili.com":
+            bilibili.download(url_info, options)
+        else:
+            raise Exception("Unsupported url:", url)
+    pass
+
+
 @register
 def exit_handler():
     """程序退出时，清理资源
@@ -25,8 +43,7 @@ def exit_handler():
     pass
 
 
-# noinspection PyUnusedLocal
-def sig_handler(signum, frame):
+def sig_handler(signum, _):
     exit_handler()
     exit(0)
 
