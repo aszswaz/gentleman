@@ -1,6 +1,11 @@
 [project]
 name = "gentleman"
 version = "1.0.0"
+authors=[
+    {name = "aszswaz", email = "aszswaz@163.com"},
+]
+description = "video downloader."
+requires-python = ">=3.10"
 dependencies = [
     "requests"
 ]
@@ -9,8 +14,8 @@ dependencies = [
 gentleman = "gentleman.__main__:main"
 
 [build-system]
-requires = ["setuptools"]
+requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
-namespaces = false
+namespaces = true

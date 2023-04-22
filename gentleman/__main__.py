@@ -5,20 +5,25 @@ import shutil
 
 from urllib.parse import urlparse, ParseResult
 
+from .DownloadError import DownloadError
 from . import config, bilibili
 from .options import Options
 
 
 def main():
-    options = Options()
+    try:
+        options = Options()
 
-    # 用户发送的退出信号处理
-    # kill pid
-    signal.signal(signal.SIGINT, sig_handler)
-    # ctrl - c
-    signal.signal(signal.SIGTERM, sig_handler)
+        # 用户发送的退出信号处理
+        # kill pid
+        signal.signal(signal.SIGINT, sig_handler)
+        # ctrl - c
+        signal.signal(signal.SIGTERM, sig_handler)
 
-    video_download(options)
+        video_download(options)
+    except RuntimeError as e:
+        print(''.join(e.args))
+        pass
 
 
 def video_download(options: Options):
@@ -31,7 +36,7 @@ def video_download(options: Options):
         if url_info.hostname == "www.bilibili.com":
             bilibili.download(url_info, options)
         else:
-            raise Exception("Unsupported url:", url)
+            raise DownloadError(f"Unsupported url: {url}")
     pass
 
 
@@ -45,7 +50,7 @@ def exit_handler():
 
 def sig_handler(signum, _):
     exit_handler()
-    exit(0)
+    exit(signum)
 
 
 if __name__ == '__main__':

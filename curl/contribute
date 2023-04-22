@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# UP 投稿的视频下载
+
+set -o errexit
+set -o nounset
+
+VIDEO_URL="https://www.bilibili.com/video/BV1VZ4y1H7YN/?spm_id_from=333.337.search-card.all.click&vd_source=998e7c3102ff613593490bcd4a5de78c"
+TMP_DIRECTORY="/tmp/BV1VZ4y1H7YN/"
+HTML_FILE="$TMP_DIRECTORY/video.html"
+
+if [ ! -d "$TMP_DIRECTORY" ]; then
+    mkdir "$TMP_DIRECTORY"
+fi
+
+# 下载 HTML 页面
+curl \
+    "$VIDEO_URL" \
+    --connect-timeout 30 \
+    --compressed \
+    --disable \
+    --cookie "_uuid=3DF7EA104-CDE8-1066B-103D1-51069D7CA106E1054546infoc; buvid3=E64673FC-08C1-352A-33BB-43EE053311B359941infoc; b_nut=1662126161; i-wanna-go-back=-1; LIVE_BUVID=AUTO3316621784051764; buvid_fp_plain=undefined; DedeUserID=96775096; DedeUserID__ckMd5=366ebe8be3f99c78; b_ut=5; theme_style=light; nostalgia_conf=-1; CURRENT_BLACKGAP=0; hit-dyn-v2=1; buvid4=92B4349A-01A6-B9C7-1799-35C4E0DF04A146310-022062307-Rg%2BsQUYYo8Si1CIKxG3eOA%3D%3D; hit-new-style-dyn=0; rpdid=|(J~lkkkRm|k0J'uYY)~Y|~JY; share_source_origin=WEIXIN; bsource_origin=app_bili; header_theme_version=CLOSE; home_feed_column=5; CURRENT_FNVAL=4048; CURRENT_PID=56490070-cc9d-11ed-bcdd-4f11a317d45c; theme_style=light; CURRENT_QUALITY=64; bsource=search_google; fingerprint=9213c2e78bbd6739b8e9cb713b984d33; FEED_LIVE_VERSION=V8; browser_resolution=1920-967; buvid_fp=9213c2e78bbd6739b8e9cb713b984d33; PVID=2; SESSDATA=7b56274c%2C1697715338%2C58e7a%2A42; bili_jct=7e0e49764159a9bc8942a13210d03f64; b_lsid=58B51059C_187A90D3B63; innersign=1; sid=em73iohy" \
+    --output "$HTML_FILE"
+
+grep -o -P '<script>window.__playinfo__=\{.*?\}</script>' "$HTML_FILE" |
+    grep -o -P '\{.*(?=\})\}' | jq
+
+rm -rf "$TMP_DIRECTORY"

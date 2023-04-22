@@ -5,7 +5,7 @@ import re
 
 from urllib.parse import ParseResult
 
-from ..DownloadException import DownloadException
+from ..DownloadError import DownloadError
 from ..options import Options
 from ..config import base_header, chrome_ua, temp_dir
 from .BiliBiliVideo import BiliBiliVideo
@@ -37,7 +37,7 @@ class BiliBili:
         if path.startswith(prefix):
             self.ep = path[len(prefix): len(path)]
         else:
-            raise DownloadException(f"Unsupported video address: {url.geturl()}")
+            raise DownloadError(f"Unsupported video address: {url.geturl()}")
         pass
 
     def download(self):
@@ -66,7 +66,7 @@ class BiliBili:
         url = f"https://api.bilibili.com/pugv/view/web/season?ep_id={self.ep}"
         res = requests.get(url=url, headers=self.header).json()
         if res["code"] != 0:
-            raise DownloadException(f"Failed to get video information, url: {url}, response: {res}")
+            raise DownloadError(f"Failed to get video information, url: {url}, response: {res}")
         data = res["data"]
 
         videos: list[BiliBiliVideo] = []

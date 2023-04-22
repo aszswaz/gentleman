@@ -1,0 +1,8 @@
+#!/bin/bash
+
+set -o errexit
+set -o nounset
+
+cd "$(dirname $0)"
+
+rm -rf build dist gentleman.egg-info *.pkg.tar.zst

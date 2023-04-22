@@ -3,7 +3,7 @@ import tempfile
 
 import requests
 
-from ..DownloadException import DownloadException
+from ..DownloadError import DownloadError
 from ..options import Options
 from ..config import chrome_ua, temp_dir
 
@@ -58,7 +58,7 @@ class BiliBiliVideo:
                    f"avid={self.aid}&cid={self.cid}&qn=0&fnver=0&fnval=16&fourk=1&ep_id={self.id}"
         res = requests.get(url=play_url, headers=self.header).json()
         if res["code"] != 0:
-            raise DownloadException(f"Failed to get video information, url: {play_url}, response: {res}")
+            raise DownloadError(f"Failed to get video information, url: {play_url}, response: {res}")
 
         dash: dict = res["data"]["dash"]
         dash_video: list[dict] = dash["video"]
@@ -66,7 +66,7 @@ class BiliBiliVideo:
 
         # 为了以防万一，对 mime_type 进行检查
         if dash_video[0]["mime_type"] != "video/mp4" or audio[0]["mime_type"] != "audio/mp4":
-            raise DownloadException(
+            raise DownloadError(
                 "Video file format not supported. "
                 f"video mime type: {dash_video[0]['mime_type']}, audio mime type: {audio[0]['mime_type']}"
             )
@@ -95,7 +95,7 @@ class BiliBiliVideo:
             f"'{self.output}'"
         )
         if exit_code != os.EX_OK:
-            raise DownloadException("Video merging failed.")
+            raise DownloadError("Video merging failed.")
         pass
 
     def _file_download(self, url) -> str:
@@ -114,7 +114,7 @@ class BiliBiliVideo:
             with open(file=temp_path, mode="w+b") as file:
                 res = requests.get(url, headers=self.header, stream=True)
                 if res.status_code != 200:
-                    raise DownloadException(f"file download failed. url: {url}")
+                    raise DownloadError(f"file download failed. url: {url}")
                 total_size = int(res.headers["content-length"])
                 download_size = 0
                 for cunk in res.iter_content(chunk_size=8192):
