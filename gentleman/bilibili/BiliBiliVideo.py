@@ -1,11 +1,11 @@
 import os
+import subprocess
 import tempfile
 
 import requests
 
 from ..DownloadError import DownloadError
-from ..options import Options
-from ..config import chrome_ua, temp_dir
+from ..config import temp_dir
 
 
 class BiliBiliVideo:
@@ -86,17 +86,21 @@ class BiliBiliVideo:
         audio_file: str = self._file_download(self.audio_url)
         print("Video and audio are being merged...")
 
-        exit_code = os.system(
-            "ffmpeg "
-            "-loglevel quiet "
-            "-y "
-            "-f mp4 "
-            f"-i '{video_file}' "
-            f"-i '{audio_file}' "
-            f"'{self.output}'"
+        subprocess.run(
+            [
+                "ffmpeg",
+                "-loglevel", "quiet",
+                "-y",
+                "-f", "mp4",
+                "-i", video_file,
+                "-i", audio_file,
+                self.output
+            ],
+            check=True
         )
-        if exit_code != os.EX_OK:
-            raise DownloadError("Video merging failed.")
+
+        os.remove(video_file)
+        os.remove(audio_file)
         pass
 
     def _file_download(self, url) -> str:
