@@ -49,6 +49,7 @@ class BiliBiliVideo:
         self.output = output
 
         self._get_play_list()
+        self._video_download()
 
     def _get_play_list(self):
         """
@@ -89,7 +90,7 @@ class BiliBiliVideo:
             "ffmpeg "
             "-loglevel quiet "
             "-y "
-            "-f mp4"
+            "-f mp4 "
             f"-i '{video_file}' "
             f"-i '{audio_file}' "
             f"'{self.output}'"

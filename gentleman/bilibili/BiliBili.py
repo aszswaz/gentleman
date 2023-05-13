@@ -1,13 +1,11 @@
-import os
 import requests
-from tempfile import mktemp
 import re
 
 from urllib.parse import ParseResult
 
 from ..DownloadError import DownloadError
 from ..options import Options
-from ..config import base_header, chrome_ua, temp_dir
+from ..config import base_header
 from .BiliBiliVideo import BiliBiliVideo
 
 
@@ -50,7 +48,7 @@ class BiliBili:
 
         for item in videos:
             print(f"Downloading {item.title}...")
-            if self.filename != "":
+            if self.filename is not None and self.filename != "":
                 output = self.filename.format(item.number)
             else:
                 output = re.sub('[\\\\:/]', '-', item.title)
