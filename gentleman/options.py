@@ -14,7 +14,7 @@ class Options:
         arg_parse.add_argument("--cookie", type=str, required=True, help=r"帐号的 cookie。")
         arg_parse.add_argument(
             "--filename", type=str,
-            help="文件的命名规则，比如 name-%%i.mp4，%%i 是文件序号，下载器会自动根据不同平台的排序规则，生成不同的序号。"
+            help="文件的命名规则，目前仅支持指定视频的序号，比如 name-{:02d}.mp4，02d 表示使用两位数，不足两位数填充 0"
         )
         arg_parse.add_argument(
             "--output", type=str, default=os.getcwd(),
