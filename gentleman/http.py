@@ -69,7 +69,7 @@ def file_download(url: str, headers: dict):
             return temp_path
         except Exception as e:
             error = e
-            time.sleep(60 * 10)
+            time.sleep(60)
     if os.path.exists(temp_path):
         os.remove(temp_path)
     raise error
