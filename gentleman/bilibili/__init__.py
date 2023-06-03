@@ -15,13 +15,7 @@ def cmd(parser: ArgumentParser):
     """
     parser.add_argument("url", metavar="URL", type=str, help="bilibili video address")
     parser.add_argument(
-        "--filename", type=str,
-        help="the naming method of the file, %%i specifies the location of the file serial number, the length of the "
-             "file serial number is determined according to the number of videos to be downloaded, and the minimum is "
-             "a two-digit integer"
-    )
-    parser.add_argument(
-        "--output", type=str, default=os.getcwd(),
+        "--output", type=str, required=True,
         help="the directory to save the video, the default is the working directory"
     )
     parser.set_defaults(func=_start)
@@ -45,19 +39,16 @@ def _start(opt: Namespace):
         raise BiliBiliError(f"unsupported protocol: {url_info.scheme}")
     if url_info.hostname != "www.bilibili.com":
         raise BiliBiliError(f"unsupported platform: {url_info.hostname}")
-    if not url_info.geturl().endswith("/cheese/play/ep"):
+    if not url_info.path.startswith("/cheese/play/ep"):
         raise BiliBiliError(f"unsupported channel: {url_info.geturl()}")
 
-    if opt.cookie is not None:
-        cookie = opt.cookie
+    jar = get_cookie()
+    if jar is not None:
+        cookie = jar.content
+        if int(time.time()) - jar.date > 30 * 24 * 60 * 60:
+            raise BiliBiliError("the cookie of the bilibili account is invalid, please update the cookie")
     else:
-        jar = get_cookie()
-        if jar is not None:
-            cookie = jar.content
-            if int(time.time()) - jar.date > 30 * 24 * 60 * 60:
-                raise BiliBiliError("the cookie of the bilibili account is invalid, please update the cookie")
-        else:
-            raise BiliBiliError("please set the cookie of bilibili account")
+        raise BiliBiliError("please set the cookie of bilibili account")
 
     bilibili = BiliBili(url_info, cookie, opt)
     bilibili.download()

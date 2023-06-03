@@ -12,6 +12,9 @@ class Cookie:
     date: int
     content: str
 
+    def __repr__(self):
+        return self.__dict__.__repr__()
+
 
 def cmd(parser: ArgumentParser):
     """

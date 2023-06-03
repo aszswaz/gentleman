@@ -1,11 +1,10 @@
 import os
 import subprocess
-import tempfile
 
 import requests
 
 from ._bilibili_error import BiliBiliError
-from ..config import cache_dir
+from .. import http, config
 
 
 class BiliBiliVideo:
@@ -57,7 +56,7 @@ class BiliBiliVideo:
         """
         play_url = "https://api.bilibili.com/pugv/player/web/playurl?" \
                    f"avid={self.aid}&cid={self.cid}&qn=0&fnver=0&fnval=16&fourk=1&ep_id={self.id}"
-        res = requests.get(url=play_url, headers=self.header).json()
+        res = requests.get(url=play_url, headers=self.header, timeout=config.http_timeout).json()
         if res["code"] != 0:
             raise BiliBiliError(f"Failed to get video information, url: {play_url}, response: {res}")
 
@@ -81,9 +80,9 @@ class BiliBiliVideo:
         下载视频的画面流和音频流
         """
         print("Downloading image stream...")
-        video_file: str = self._file_download(self.video_url)
+        video_file: str = http.file_download(self.video_url, self.header)
         print("Downloading audio stream...")
-        audio_file: str = self._file_download(self.audio_url)
+        audio_file: str = http.file_download(self.audio_url, self.header)
         print("Video and audio are being merged...")
 
         subprocess.run(
@@ -94,6 +93,7 @@ class BiliBiliVideo:
                 "-f", "mp4",
                 "-i", video_file,
                 "-i", audio_file,
+                "-metadata", f"title={self.title}",
                 self.output
             ],
             check=True
@@ -102,41 +102,3 @@ class BiliBiliVideo:
         os.remove(video_file)
         os.remove(audio_file)
         pass
-
-    def _file_download(self, url) -> str:
-        """
-        下载文件
-
-        :param url: url 资源
-        :return: 文件的临时保存目录，需要手动删除文件
-        """
-        temp_path: str = tempfile.mktemp(prefix="bilibili-", dir=cache_dir)
-
-        try:
-            while True:
-                # 文件总大小
-                total_size = 0
-                # 文件已下载的大小
-                download_size = 0
-
-                with open(file=temp_path, mode="w+b") as file:
-                    self.header["Range"] = f"bytes={download_size}-"
-                    print(self.header)
-                    res = requests.get(url, headers=self.header, stream=True)
-                    if res.status_code != 200:
-                        raise BiliBiliError(f"file download failed. url: {url}")
-                    total_size = int(res.headers["content-length"])
-                    for chunk in res.iter_content(chunk_size=8192):
-                        file.write(chunk)
-                        download_size += len(chunk)
-                        print(f"\r已下载：{download_size / total_size * 100:.2f}%", end="")
-                    print()
-
-                if download_size == total_size:
-                    return temp_path
-                else:
-                    print("文件下载中断，正在重新下载")
-                    os.remove(temp_path)
-        except Exception as e:
-            os.remove(temp_path)
-            raise e

@@ -26,7 +26,7 @@ def main():
         args = main_parser.parse_args()
         args.func(args)
     except GentlemanError as e:
-        print(''.join(e.args))
+        print(e.msg)
 
 
 @register

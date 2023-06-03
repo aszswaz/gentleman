@@ -1,3 +1,3 @@
 class GentlemanError(RuntimeError):
-    def __init__(self, arg):
-        self.args = arg
+    def __init__(self, msg):
+        self.msg = msg

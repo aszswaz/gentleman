@@ -1,12 +1,11 @@
-import re
 from argparse import Namespace
-
-import requests
 from urllib.parse import ParseResult
 
+import requests
+
 from ._bilibili_error import BiliBiliError
-from ..config import base_header
 from .bili_bili_video import BiliBiliVideo
+from .. import config
 
 
 class BiliBili:
@@ -26,16 +25,14 @@ class BiliBili:
     def __init__(self, url: ParseResult, cookie: str, opt: Namespace):
         self.url = url
         self.cookie = cookie
-        self.header = base_header.copy()
+        self.header = config.base_header.copy()
         self.output = opt.output
-        self.filename = opt.filename
 
-        path: str = url.path
         prefix = "/cheese/play/ep"
-        self.ep = path[len(prefix): len(path)]
+        self.ep = url.path[len(prefix): len(url.path)]
 
     def download(self):
-        header = base_header.copy()
+        header = config.base_header.copy()
         videos: list[BiliBiliVideo] = self._get_video_list()
 
         header["cookie"] = self.cookie
@@ -43,11 +40,7 @@ class BiliBili:
 
         for item in videos:
             print(f"Downloading {item.title}...")
-            if self.filename is not None and self.filename != "":
-                output = self.filename.format(item.number)
-            else:
-                output = re.sub('[\\\\:/]', '-', item.title)
-                output = f"{output}-{item.number:02d}"
+            output = str(item.number).zfill(len(str(len(videos))))
             output = f"{self.output}/{output}.mp4"
             item.download(header, output)
         pass
@@ -57,7 +50,7 @@ class BiliBili:
         获取视频的编集列表中，所有视频的 ID 和标题
         """
         url = f"https://api.bilibili.com/pugv/view/web/season?ep_id={self.ep}"
-        res = requests.get(url=url, headers=self.header).json()
+        res = requests.get(url=url, headers=self.header, timeout=config.http_timeout).json()
         if res["code"] != 0:
             raise BiliBiliError(f"Failed to get video information, url: {url}, response: {res}")
         data = res["data"]

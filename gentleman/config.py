@@ -12,6 +12,7 @@ base_header = {
 chrome_ua = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.134 Safari/537.36"
 cache_dir = user_cache_dir(application)
 config_dir = user_config_dir(application)
+http_timeout = 60
 
 
 def mkdirs():
