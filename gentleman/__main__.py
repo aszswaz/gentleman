@@ -1,50 +1,39 @@
 #!/usr/bin/python3
-from atexit import register
 import signal
-import shutil
+from argparse import ArgumentParser
+from atexit import register
 
-from urllib.parse import urlparse, ParseResult
-
-from .download_error import DownloadError
-from . import config, bilibili
-from .options import Options
+from . import config, bilibili, cookie
+from ._gentleman_error import GentlemanError
 
 
 def main():
     try:
-        options = Options()
-
         # 用户发送的退出信号处理
         # kill pid
         signal.signal(signal.SIGINT, sig_handler)
         # ctrl - c
         signal.signal(signal.SIGTERM, sig_handler)
 
-        video_download(options)
-    except RuntimeError as e:
+        config.mkdirs()
+
+        main_parser = ArgumentParser(description="video downloader")
+        sub_parser = main_parser.add_subparsers(title="instruction", required=True)
+
+        cookie.cmd(sub_parser.add_parser("cookie", help="manage cookie"))
+        bilibili.cmd(sub_parser.add_parser("download", help="download video file"))
+
+        args = main_parser.parse_args()
+        args.func(args)
+    except GentlemanError as e:
         print(''.join(e.args))
-        pass
-
-
-def video_download(options: Options):
-    """
-    下载视频
-    :param options:下载选项
-    """
-    for url in options.urls:
-        url_info: ParseResult = urlparse(url)
-        if url_info.hostname == "www.bilibili.com":
-            bilibili.download(url_info, options)
-        else:
-            raise DownloadError(f"Unsupported url: {url}")
-    pass
 
 
 @register
 def exit_handler():
     """程序退出时，清理资源
     """
-    shutil.rmtree(config.temp_dir)
+    config.rmdirs()
     pass
 
 

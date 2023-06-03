@@ -1,10 +1,10 @@
-import requests
 import re
+from argparse import Namespace
 
+import requests
 from urllib.parse import ParseResult
 
-from ..download_error import DownloadError
-from ..options import Options
+from ._bilibili_error import BiliBiliError
 from ..config import base_header
 from .bili_bili_video import BiliBiliVideo
 
@@ -23,23 +23,18 @@ class BiliBili:
     # 用于提取文件名称的正则表达式
     filename: str
 
-    def __init__(self, url: ParseResult, options: Options):
+    def __init__(self, url: ParseResult, cookie: str, opt: Namespace):
         self.url = url
-        self.cookie = options.cookie
+        self.cookie = cookie
         self.header = base_header.copy()
-        self.output = options.output
-        self.filename = options.filename
+        self.output = opt.output
+        self.filename = opt.filename
 
         path: str = url.path
         prefix = "/cheese/play/ep"
-        if path.startswith(prefix):
-            self.ep = path[len(prefix): len(path)]
-        else:
-            raise DownloadError(f"Unsupported video address: {url.geturl()}")
-        pass
+        self.ep = path[len(prefix): len(path)]
 
     def download(self):
-        output = ""
         header = base_header.copy()
         videos: list[BiliBiliVideo] = self._get_video_list()
 
@@ -64,7 +59,7 @@ class BiliBili:
         url = f"https://api.bilibili.com/pugv/view/web/season?ep_id={self.ep}"
         res = requests.get(url=url, headers=self.header).json()
         if res["code"] != 0:
-            raise DownloadError(f"Failed to get video information, url: {url}, response: {res}")
+            raise BiliBiliError(f"Failed to get video information, url: {url}, response: {res}")
         data = res["data"]
 
         videos: list[BiliBiliVideo] = []
@@ -72,7 +67,7 @@ class BiliBili:
         for i, item in enumerate(episodes):
             videos.append(BiliBiliVideo(
                 number=i,
-                id=item["id"],
+                video_id=item["id"],
                 aid=item["aid"],
                 cid=item["cid"],
                 title=item["title"]

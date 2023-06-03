@@ -4,8 +4,8 @@ import tempfile
 
 import requests
 
-from ..download_error import DownloadError
-from ..config import temp_dir
+from ._bilibili_error import BiliBiliError
+from ..config import cache_dir
 
 
 class BiliBiliVideo:
@@ -34,13 +34,13 @@ class BiliBiliVideo:
             number: int,
             aid: int,
             cid: int,
-            id: int,
+            video_id: int,
             title: str
     ) -> None:
         self.number = number
         self.aid = aid
         self.cid = cid
-        self.id = id
+        self.id = video_id
         self.title = title
         pass
 
@@ -59,7 +59,7 @@ class BiliBiliVideo:
                    f"avid={self.aid}&cid={self.cid}&qn=0&fnver=0&fnval=16&fourk=1&ep_id={self.id}"
         res = requests.get(url=play_url, headers=self.header).json()
         if res["code"] != 0:
-            raise DownloadError(f"Failed to get video information, url: {play_url}, response: {res}")
+            raise BiliBiliError(f"Failed to get video information, url: {play_url}, response: {res}")
 
         dash: dict = res["data"]["dash"]
         dash_video: list[dict] = dash["video"]
@@ -67,7 +67,7 @@ class BiliBiliVideo:
 
         # 为了以防万一，对 mime_type 进行检查
         if dash_video[0]["mime_type"] != "video/mp4" or audio[0]["mime_type"] != "audio/mp4":
-            raise DownloadError(
+            raise BiliBiliError(
                 "Video file format not supported. "
                 f"video mime type: {dash_video[0]['mime_type']}, audio mime type: {audio[0]['mime_type']}"
             )
@@ -110,7 +110,7 @@ class BiliBiliVideo:
         :param url: url 资源
         :return: 文件的临时保存目录，需要手动删除文件
         """
-        temp_path: str = tempfile.mktemp(prefix="bilibili-", dir=temp_dir)
+        temp_path: str = tempfile.mktemp(prefix="bilibili-", dir=cache_dir)
 
         try:
             while True:
@@ -124,7 +124,7 @@ class BiliBiliVideo:
                     print(self.header)
                     res = requests.get(url, headers=self.header, stream=True)
                     if res.status_code != 200:
-                        raise DownloadError(f"file download failed. url: {url}")
+                        raise BiliBiliError(f"file download failed. url: {url}")
                     total_size = int(res.headers["content-length"])
                     for chunk in res.iter_content(chunk_size=8192):
                         file.write(chunk)

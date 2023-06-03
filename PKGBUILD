@@ -1,7 +1,7 @@
 pkgname=python-genleman
 pkgver=v1.0.0
 pkgrel=1
-pkgdesc="bilibili instructional video downloader."
+pkgdesc="视频下载器"
 arch=(any)
 license=('GPL')
 makedepends=(python-build python-installer python-wheel)
