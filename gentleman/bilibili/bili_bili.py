@@ -3,10 +3,10 @@ import re
 
 from urllib.parse import ParseResult
 
-from ..DownloadError import DownloadError
+from ..download_error import DownloadError
 from ..options import Options
 from ..config import base_header
-from .BiliBiliVideo import BiliBiliVideo
+from .bili_bili_video import BiliBiliVideo
 
 
 class BiliBili:

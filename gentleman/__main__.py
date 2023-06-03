@@ -5,7 +5,7 @@ import shutil
 
 from urllib.parse import urlparse, ParseResult
 
-from .DownloadError import DownloadError
+from .download_error import DownloadError
 from . import config, bilibili
 from .options import Options
 

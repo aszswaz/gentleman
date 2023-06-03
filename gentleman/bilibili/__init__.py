@@ -1,6 +1,6 @@
 from urllib.parse import ParseResult
 
-from .BiliBili import BiliBili
+from .bili_bili import BiliBili
 from ..options import Options
 
 

@@ -4,7 +4,7 @@ import tempfile
 
 import requests
 
-from ..DownloadError import DownloadError
+from ..download_error import DownloadError
 from ..config import temp_dir
 
 
@@ -110,24 +110,33 @@ class BiliBiliVideo:
         :param url: url 资源
         :return: 文件的临时保存目录，需要手动删除文件
         """
-        temp_path: str = tempfile.mktemp(
-            prefix="bilibili-",
-            dir=temp_dir
-        )
+        temp_path: str = tempfile.mktemp(prefix="bilibili-", dir=temp_dir)
 
         try:
-            with open(file=temp_path, mode="w+b") as file:
-                res = requests.get(url, headers=self.header, stream=True)
-                if res.status_code != 200:
-                    raise DownloadError(f"file download failed. url: {url}")
-                total_size = int(res.headers["content-length"])
+            while True:
+                # 文件总大小
+                total_size = 0
+                # 文件已下载的大小
                 download_size = 0
-                for cunk in res.iter_content(chunk_size=8192):
-                    file.write(cunk)
-                    download_size += len(cunk)
-                    print(f"\r{download_size / total_size * 100:.2f}%", end="")
-                print()
+
+                with open(file=temp_path, mode="w+b") as file:
+                    self.header["Range"] = f"bytes={download_size}-"
+                    print(self.header)
+                    res = requests.get(url, headers=self.header, stream=True)
+                    if res.status_code != 200:
+                        raise DownloadError(f"file download failed. url: {url}")
+                    total_size = int(res.headers["content-length"])
+                    for chunk in res.iter_content(chunk_size=8192):
+                        file.write(chunk)
+                        download_size += len(chunk)
+                        print(f"\r已下载：{download_size / total_size * 100:.2f}%", end="")
+                    print()
+
+                if download_size == total_size:
+                    return temp_path
+                else:
+                    print("文件下载中断，正在重新下载")
+                    os.remove(temp_path)
         except Exception as e:
             os.remove(temp_path)
             raise e
-        return temp_path
