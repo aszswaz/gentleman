@@ -41,14 +41,14 @@ class _DownloadTask:
             res = requests.get(self.url, headers=self.headers, stream=True, timeout=config.http_timeout)
             if res.status_code != 206:
                 raise HttpError("resource download failed.", self.url, res)
-            total_size = int(res.headers["content-length"])
+            self.total_size = int(res.headers["content-length"])
             for chunk in res.iter_content(chunk_size=8192):
                 file.write(chunk)
                 self.download_size += len(chunk)
-                print(f"\rdownloaded: {self.download_size / total_size * 100:.2f}%", end="")
+                print(f"\rdownloaded: {self.download_size / self.total_size * 100:.2f}%", end="")
             print()
-            if self.download_size != self.total_size:
-                raise HttpError("file truncation", self.url, res)
+        if self.download_size != self.total_size:
+            raise HttpError("file truncation", self.url, res)
 
 
 def file_download(url: str, headers: dict):
@@ -63,12 +63,13 @@ def file_download(url: str, headers: dict):
 
     error = None
     task = _DownloadTask(url, headers, temp_path)
-    for _ in range(10):
+    for retry in range(10):
         try:
             task.start()
             return temp_path
         except Exception as e:
             error = e
+            print("\033[91m" f"download failed, retry {retry + 1} in 60 seconds" "\033[0m")
             time.sleep(60)
     if os.path.exists(temp_path):
         os.remove(temp_path)

@@ -39,7 +39,7 @@ class BiliBili:
         header["referer"] = "https://www.bilibili.com/"
 
         for item in videos:
-            print(f"Downloading {item.title}...")
+            print(f"downloading episode {item.number} of {len(videos)} total.")
             output = str(item.number).zfill(len(str(len(videos))))
             output = f"{self.output}/{output}.mp4"
             item.download(header, output)
