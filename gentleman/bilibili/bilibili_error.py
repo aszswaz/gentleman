@@ -2,5 +2,5 @@ from ..gentleman_error import GentlemanError
 
 
 class BiliBiliError(GentlemanError):
-    def __init__(self, arg):
-        self.args = arg
+    def __init__(self, msg):
+        self.msg = msg

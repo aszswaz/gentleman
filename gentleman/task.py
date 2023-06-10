@@ -58,6 +58,7 @@ class Task:
             file = f"{self.save_directory}/{str(index).zfill(digits)}.mp4"
             iterm.download(file)
             self.downloaded = index
+            time.sleep(300)
         pass
 
 
