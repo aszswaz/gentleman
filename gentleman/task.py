@@ -52,7 +52,7 @@ class Task:
         self.total = total
         digits = int(math.log10(total))
 
-        videos = videos[self.downloaded:]
+        videos = videos[self.downloaded + 1:]
         for index, iterm in enumerate(videos, self.downloaded + 1):
             print(f"total \033[91m{total}\033[0m, downloading \033[91m{index}\033[0m episodes")
             file = f"{self.save_directory}/{str(index).zfill(digits)}.mp4"
