@@ -53,7 +53,7 @@ class Task:
         digits = int(math.log10(total))
 
         videos = videos[self.downloaded:]
-        for index, iterm in enumerate(videos, self.downloaded):
+        for index, iterm in enumerate(videos, self.downloaded + 1):
             print(f"total \033[91m{total}\033[0m, downloading \033[91m{index}\033[0m episodes")
             file = f"{self.save_directory}/{str(index).zfill(digits)}.mp4"
             iterm.download(file)
@@ -81,7 +81,7 @@ def create(args: Namespace):
         "save_directory": args.save_directory,
         "cookie": args.cookie,
         "total": 0,
-        "downloaded": args.offset,
+        "downloaded": args.offset <= 0 and 0 or args.offset - 1,
         "success": False,
         "update_time": int(time.time())
     })
