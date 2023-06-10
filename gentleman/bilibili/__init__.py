@@ -1,40 +1,14 @@
-from argparse import ArgumentParser, Namespace
-import os
-import time
-
 from urllib.parse import ParseResult, urlparse
 
-from .bili_bili import BiliBili
-from ._bilibili_error import BiliBiliError
-from ..cookie import get_cookie
+import requests
+
+from .bilibili_error import BiliBiliError
+from .. import config
+from .bilibili_video import BiliBiliVideo
 
 
-def cmd(parser: ArgumentParser):
-    """
-    注册 download 指令
-    """
-    parser.add_argument("url", metavar="URL", type=str, help="bilibili video address")
-    parser.add_argument(
-        "--output", type=str, required=True,
-        help="the directory to save the video, the default is the working directory"
-    )
-    parser.set_defaults(func=_start)
-
-
-def _start(opt: Namespace):
-    """
-    下载 bilibili 课堂的视频
-    @param opt: 视频下载参数
-    """
-    if os.path.exists(opt.output):
-        if not os.path.isdir(opt.output):
-            raise BiliBiliError(f"{opt.output} is not a directory")
-        if not os.access(opt.output, os.W_OK):
-            raise PermissionError(f"cannot access {opt.output}: Permission denied")
-    else:
-        os.makedirs(opt.output)
-
-    url_info: ParseResult = urlparse(opt.url)
+def build(url: str, cookie: str) -> (list[BiliBiliVideo], int):
+    url_info: ParseResult = urlparse(url)
     if url_info.scheme == "http" or url_info.scheme != "https":
         raise BiliBiliError(f"unsupported protocol: {url_info.scheme}")
     if url_info.hostname != "www.bilibili.com":
@@ -42,13 +16,32 @@ def _start(opt: Namespace):
     if not url_info.path.startswith("/cheese/play/ep"):
         raise BiliBiliError(f"unsupported channel: {url_info.geturl()}")
 
-    jar = get_cookie()
-    if jar is not None:
-        cookie = jar.content
-        if int(time.time()) - jar.date > 30 * 24 * 60 * 60:
-            raise BiliBiliError("the cookie of the bilibili account is invalid, please update the cookie")
-    else:
-        raise BiliBiliError("please set the cookie of bilibili account")
+    return _get_video_list(url_info, cookie)
 
-    bilibili = BiliBili(url_info, cookie, opt)
-    bilibili.download()
+
+def _get_video_list(url_info: ParseResult, cookie: str) -> (list[BiliBiliVideo], int):
+    """
+    获取视频分集列表
+    """
+    video_id = url_info.path[len("/cheese/play/ep"):]
+    url = f"https://api.bilibili.com/pugv/view/web/season?ep_id={video_id}"
+    headers = config.base_header.copy()
+
+    headers["cookie"] = cookie
+    headers["referer"] = "https://www.bilibili.com/"
+
+    res = requests.get(url=url, headers=headers, timeout=config.http_timeout).json()
+    if res["code"] != 0:
+        raise BiliBiliError(f"failed to get video information, url: {url}, response: {res}")
+
+    data = res["data"]
+    # 视频编集列表
+    episodes: list = data['episodes']
+    # 视频编集总数
+    total: int = data["episode_page"]["total"]
+
+    videos = []
+    for iterm in episodes:
+        videos.append(BiliBiliVideo(iterm, headers))
+
+    return videos, total

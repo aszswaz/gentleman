@@ -1,4 +1,4 @@
-from .._gentleman_error import GentlemanError
+from ..gentleman_error import GentlemanError
 
 
 class BiliBiliError(GentlemanError):

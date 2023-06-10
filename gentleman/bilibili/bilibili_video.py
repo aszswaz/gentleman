@@ -3,7 +3,7 @@ import subprocess
 
 import requests
 
-from ._bilibili_error import BiliBiliError
+from .bilibili_error import BiliBiliError
 from .. import http, config
 
 
@@ -13,9 +13,7 @@ class BiliBiliVideo:
     """
 
     # HTTP 请求头
-    header: dict
-    # 文件输出路径
-    output: str
+    headers: dict
 
     # 视频的序号，从 0 开始
     number: int
@@ -30,25 +28,19 @@ class BiliBiliVideo:
 
     def __init__(
             self,
-            number: int,
-            aid: int,
-            cid: int,
-            video_id: int,
-            title: str
+            parameters: dict,
+            headers: dict
     ) -> None:
-        self.number = number
-        self.aid = aid
-        self.cid = cid
-        self.id = video_id
-        self.title = title
+        self.aid = parameters["aid"]
+        self.cid = parameters["cid"]
+        self.id = parameters["id"]
+        self.title = parameters["title"]
+        self.headers = headers
         pass
 
-    def download(self, header: dict, output: str):
-        self.header = header
-        self.output = output
-
+    def download(self, save_path: str):
         self._get_play_list()
-        self._video_download()
+        self._video_download(save_path)
 
     def _get_play_list(self):
         """
@@ -56,9 +48,9 @@ class BiliBiliVideo:
         """
         play_url = "https://api.bilibili.com/pugv/player/web/playurl?" \
                    f"avid={self.aid}&cid={self.cid}&qn=0&fnver=0&fnval=16&fourk=1&ep_id={self.id}"
-        res = requests.get(url=play_url, headers=self.header, timeout=config.http_timeout).json()
+        res = requests.get(url=play_url, headers=self.headers, timeout=config.http_timeout).json()
         if res["code"] != 0:
-            raise BiliBiliError(f"Failed to get video information, url: {play_url}, response: {res}")
+            raise BiliBiliError(f"failed to get video information, url: {play_url}, response: {res}")
 
         dash: dict = res["data"]["dash"]
         dash_video: list[dict] = dash["video"]
@@ -75,14 +67,14 @@ class BiliBiliVideo:
         self.audio_url = audio[0]["base_url"]
         pass
 
-    def _video_download(self):
+    def _video_download(self, save_path: str):
         """
         下载视频的画面流和音频流
         """
         print("Downloading image stream...")
-        video_file: str = http.file_download(self.video_url, self.header)
+        video_file: str = http.file_download(self.video_url, self.headers)
         print("Downloading audio stream...")
-        audio_file: str = http.file_download(self.audio_url, self.header)
+        audio_file: str = http.file_download(self.audio_url, self.headers)
         print("Video and audio are being merged...")
 
         subprocess.run(
@@ -94,7 +86,7 @@ class BiliBiliVideo:
                 "-i", video_file,
                 "-i", audio_file,
                 "-metadata", f"title={self.title}",
-                self.output
+                save_path
             ],
             check=True
         )

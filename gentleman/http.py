@@ -5,7 +5,7 @@ import time
 import requests
 
 from . import config
-from ._gentleman_error import GentlemanError
+from .gentleman_error import GentlemanError
 
 
 class HttpError(GentlemanError):
