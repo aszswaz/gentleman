@@ -54,7 +54,7 @@ class Task:
 
         videos = videos[self.downloaded + 1:]
         for index, iterm in enumerate(videos, self.downloaded + 1):
-            print(f"total \033[91m{total}\033[0m, downloading \033[91m{index}\033[0m episodes")
+            print(f"total \033[91m{total}\033[0m, downloading \033[91m{index}\033[0m episodes, title: {iterm.title}")
             file = f"{self.save_directory}/{str(index).zfill(digits)}.mp4"
             iterm.download(file)
             self.downloaded = index
