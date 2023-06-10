@@ -5,7 +5,7 @@ pkgdesc="视频下载器"
 arch=(any)
 license=('GPL')
 makedepends=(python-build python-installer python-wheel)
-depends=(python python-requests ffmpeg)
+depends=(python python-requests python-appdirs ffmpeg)
 groups=('aszswaz')
 build() {
     cd ../
