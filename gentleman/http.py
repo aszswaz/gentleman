@@ -45,7 +45,7 @@ class _DownloadTask:
             for chunk in res.iter_content(chunk_size=8192):
                 file.write(chunk)
                 self.download_size += len(chunk)
-                print(f"\rdownloaded: {self.download_size / self.total_size * 100:.2f}%", end="")
+                print("\r\033[91m" f"downloaded: {self.download_size / self.total_size * 100:.2f}%" "\033[0m", end="")
             print()
         if self.download_size != self.total_size:
             raise HttpError("file truncation", self.url, res)
