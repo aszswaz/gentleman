@@ -19,9 +19,10 @@ def _join_header(header: dict) -> str:
 
 
 class _Video:
-    def __init__(self, link: str, title: str, header: dict):
+    def __init__(self, link: str, title: str, full_title: str, header: dict):
         self.link = link
         self.title = title
+        self.full_title = full_title
         self.header = header.copy()
 
         self.header["referer"] = link
@@ -75,8 +76,9 @@ class _Video:
             "ffmpeg",
             "-f", "mp4", "-headers", video_header_str, "-i", self.video,
             "-f", "mp4", "-headers", audio_header_str, "-i", self.audio,
-            "-codec", "copy",
-            "-f", "mp4", out_file
+            "-codec", "copy", "-f", "mp4",
+            "-metadata", f"title={self.full_title}",
+            out_file
         ], check=True)
         pass
 
@@ -123,5 +125,5 @@ class TVSeries:
         result = []
         episodes = body["result"]["episodes"]
         for item in episodes:
-            result.append(_Video(item["link"], item["title"], self.header))
+            result.append(_Video(item["link"], item["title"], item["share_copy"], self.header))
         return result
