@@ -1,25 +1,43 @@
-# python
-venv
-__pycache__
-build
-*.whl
-gentleman.egg-info
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
 
-# JetBrain
-.idea
+### IntelliJ IDEA ###
+.idea/modules.xml
+.idea/jarRepositories.xml
+.idea/compiler.xml
+.idea/libraries/
+*.iws
 *.iml
+*.ipr
+.idea
 
-# binary file
-*.m4s
-*.mp3
-*.mp4
-*.m4a
-*.tar.gz
-*.zip
+### Eclipse ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
 
-# curl
-*.cookie
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
 
-# archlinux package
-pkg
-*.pkg.tar.zst
+### VS Code ###
+.vscode/
+
+### Mac OS ###
+.DS_Store
+
+### Python ###
+*.egg-info
+*.pyc
