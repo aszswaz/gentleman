@@ -19,13 +19,13 @@ def _join_header(header: dict) -> str:
 
 
 class _Video:
-    def __init__(self, link: str, title: str, full_title: str, header: dict):
-        self.link = link
-        self.title = title
-        self.full_title = full_title
+    def __init__(self, data: dict, header: dict):
+        self.link = data["link"]
+        self.title = data["title"]
+        self.full_title = data["share_copy"]
         self.header = header.copy()
 
-        self.header["referer"] = link
+        self.header["referer"] = self.link
 
     def download(self):
         """
@@ -122,8 +122,6 @@ class TVSeries:
         if body["code"] != 0:
             raise DownloadError(f"unable to obtain the video list, the server returns the message: {body["message"]}")
 
-        result = []
         episodes = body["result"]["episodes"]
-        for item in episodes:
-            result.append(_Video(item["link"], item["title"], item["share_copy"], self.header))
-        return result
+        # 删除视频集中的预告视频，并且转换为 _Video 对象
+        return [_Video(item, self.header) for item in episodes if item["badge_type"] != 1]
