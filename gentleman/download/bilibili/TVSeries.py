@@ -5,8 +5,7 @@ import subprocess
 
 import requests
 
-from ..options import Options
-from ..config import base_header
+from ...config import base_header
 from ..DownloadError import DownloadError
 
 
@@ -67,19 +66,23 @@ class _Video:
         out_file = f"{self.title}.mp4"
 
         if os.path.exists(out_file):
+            print("skip:", self.title)
             return
 
         video_header_str = _join_header(video_header)
         audio_header_str = _join_header(audio_header)
 
-        subprocess.run(args=[
-            "ffmpeg",
-            "-f", "mp4", "-headers", video_header_str, "-i", self.video,
-            "-f", "mp4", "-headers", audio_header_str, "-i", self.audio,
-            "-codec", "copy", "-f", "mp4",
-            "-metadata", f"title={self.full_title}",
-            out_file
-        ], check=True)
+        subprocess.run(
+            args=[
+                "ffmpeg",
+                "-f", "mp4", "-headers", video_header_str, "-i", self.video,
+                "-f", "mp4", "-headers", audio_header_str, "-i", self.audio,
+                "-codec", "copy",
+                "-metadata", f"title={self.full_title}",
+                "-f", "mp4", out_file
+            ],
+            check=True
+        )
         pass
 
 
@@ -88,14 +91,11 @@ class TVSeries:
     BiliBili 番剧下载器
     """
 
-    def __init__(self, url_info: ParseResult, opt: Options):
+    def __init__(self, url_info: ParseResult, cookie: str):
         self.url = url_info
         self.header = base_header.copy()
-        self.cookie = opt.cookie
-        self.output = opt.output
-        self.filename = opt.filename
 
-        self.header["cookie"] = opt.cookie
+        self.header["cookie"] = cookie
 
         # 解析 ep id
         path = self.url.path

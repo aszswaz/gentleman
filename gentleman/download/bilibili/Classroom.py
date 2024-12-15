@@ -1,53 +1,33 @@
 import os
 import subprocess
-import tempfile
 
 import requests
 import re
 
 from urllib.parse import ParseResult
 
-from ..DownloadError import DownloadError
-from ..options import Options
-from ..config import base_header
-from ..config import temp_dir
+from gentleman.download.DownloadError import DownloadError
+from gentleman.config import base_header
 
 
 class Video:
-    # HTTP 请求头
-    header: dict
-    # 文件输出路径
-    output: str
-
-    # 视频的序号，从 0 开始
-    number: int
-    aid: int
-    cid: int
-    id: int
-    title: str
-    # 视频图片流下载地址
-    video_url: str
-    # 视频的音频流下载地址
-    audio_url: str
-
     def __init__(
             self,
             number: int,
             aid: int,
             cid: int,
-            id: int,
+            vid: int,
             title: str
     ) -> None:
+        self.header: dict = {}
         self.number = number
         self.aid = aid
         self.cid = cid
-        self.id = id
+        self.id = vid
         self.title = title
-        pass
 
-    def download(self, header: dict, output: str):
+    def download(self, header: dict):
         self.header = header
-        self.output = output
 
         self._get_play_list()
         self._video_download()
@@ -81,58 +61,28 @@ class Video:
         """
         下载视频的画面流和音频流
         """
-        print("Downloading image stream...")
-        video_file: str = self._file_download(self.video_url)
-        print("Downloading audio stream...")
-        audio_file: str = self._file_download(self.audio_url)
-        print("Video and audio are being merged...")
+        output = f"{re.sub('[\\\\:/]', '-', self.title)}.mp4"
+        if os.path.exists(output):
+            print("skip:", self.title)
+            return
+
+        headers = ""
+        for k, v in self.header.items():
+            headers = f"{headers}{k}: {v}\r\n"
 
         subprocess.run(
-            [
+            args=[
                 "ffmpeg",
-                "-loglevel", "quiet",
                 "-y",
+                "-f", "mp4", "-headers", headers, "-i", self.video_url,
+                "-f", "mp4", "-headers", headers, "-i", self.audio_url,
                 "-codec", "copy",
-                "-f", "mp4",
-                "-i", video_file,
-                "-i", audio_file,
-                self.output
+                "-metadata", f"title={self.title}",
+                "-f", "mp4", output
             ],
             check=True
         )
-
-        os.remove(video_file)
-        os.remove(audio_file)
         pass
-
-    def _file_download(self, url) -> str:
-        """
-        下载文件
-
-        :param url: url 资源
-        :return: 文件的临时保存目录，需要手动删除文件
-        """
-        temp_path: str = tempfile.mktemp(
-            prefix="bilibili-",
-            dir=temp_dir
-        )
-
-        try:
-            with open(file=temp_path, mode="w+b") as file:
-                res = requests.get(url, headers=self.header, stream=True)
-                if res.status_code != 200:
-                    raise DownloadError(f"file download failed. url: {url}")
-                total_size = int(res.headers["content-length"])
-                download_size = 0
-                for cunk in res.iter_content(chunk_size=8192):
-                    file.write(cunk)
-                    download_size += len(cunk)
-                    print(f"\r{download_size / total_size * 100:.2f}%", end="")
-                print()
-        except Exception as e:
-            os.remove(temp_path)
-            raise e
-        return temp_path
 
 
 class Classroom:
@@ -140,21 +90,17 @@ class Classroom:
     BiliBili 课堂的视频下载器
     """
 
-    url: ParseResult
-    cookie: str
-    # 教学视频的课程 ID
-    ep: str
-    # 视频的输出文件夹
-    output: str
-    # 用于提取文件名称的正则表达式
-    filename: str
-
-    def __init__(self, url: ParseResult, options: Options):
+    def __init__(
+            self,
+            url: ParseResult,
+            cookie: str
+    ):
         self.url = url
-        self.cookie = options.cookie
+        self.cookie = cookie
         self.header = base_header.copy()
-        self.output = options.output
-        self.filename = options.filename
+
+        path = url.path
+        self.ep = path[len("/cheese/play/ep"):len(path)]
 
     def download(self):
         header = base_header.copy()
@@ -165,13 +111,7 @@ class Classroom:
 
         for item in videos:
             print(f"Downloading {item.title}...")
-            if self.filename is not None and self.filename != "":
-                output = self.filename.format(item.number)
-            else:
-                output = re.sub('[\\\\:/]', '-', item.title)
-                output = f"{output}-{item.number:02d}"
-            output = f"{self.output}/{output}.mp4"
-            item.download(header, output)
+            item.download(header)
         pass
 
     def _get_video_list(self) -> list[Video]:
@@ -189,7 +129,7 @@ class Classroom:
         for i, item in enumerate(episodes):
             videos.append(Video(
                 number=i,
-                id=item["id"],
+                vid=item["id"],
                 aid=item["aid"],
                 cid=item["cid"],
                 title=item["title"]
