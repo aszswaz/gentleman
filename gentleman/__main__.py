@@ -8,8 +8,9 @@ from . import command
 def main():
     try:
         command.main()
-    except RuntimeError as e:
+    except Exception as e:
         print(''.join(e.args))
+        exit(1)
         pass
 
 
