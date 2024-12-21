@@ -7,6 +7,7 @@ cookies: dict | None = None
 
 
 def set_cookiejar(domain, cookie):
+    domain = _primary_domain(domain)
     cookie_dict = _load_file()
     cookie_dict[domain] = cookie
     _save(cookie_dict)
@@ -14,6 +15,7 @@ def set_cookiejar(domain, cookie):
 
 
 def get_cookiejar(domain) -> str | None:
+    domain = _primary_domain(domain)
     d = _load_file()
     if domain in d.keys():
         return d[domain]
@@ -35,6 +37,14 @@ def _load_file() -> dict:
     else:
         cookies = {}
         return cookies
+
+
+def _primary_domain(domain: str):
+    items = domain.split(".")
+    if len(items) < 2:
+        raise Exception("不合法的域名")
+    items = items[len(items) - 2:]
+    return items[0] + "." + items[1]
 
 
 def _save(d: dict):
